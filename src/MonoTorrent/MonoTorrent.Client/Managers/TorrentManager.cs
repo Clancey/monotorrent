@@ -367,6 +367,16 @@ namespace MonoTorrent.Client
             ChangePicker(CreateStandardPicker());
         }
 
+		public string Name
+		{
+			get{
+				if (torrent != null)
+					return torrent.Name;
+				if (MagnetLink != null)
+					return MagnetLink.Name;
+				return "";
+			}
+		}
 
         public TorrentManager(InfoHash infoHash, string savePath, TorrentSettings settings, string torrentSave, IList<RawTrackerTier> announces)
         {
@@ -382,9 +392,10 @@ namespace MonoTorrent.Client
 
             Initialise(savePath, "", announces);
         }
-
+		public MagnetLink MagnetLink { get; set;}
         public TorrentManager(MagnetLink magnetLink, string savePath, TorrentSettings settings, string torrentSave)
         {
+			MagnetLink = magnetLink;
             Check.MagnetLink(magnetLink);
             Check.InfoHash(magnetLink.InfoHash);
             Check.SavePath(savePath);
